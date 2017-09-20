@@ -68,11 +68,13 @@ var CountdownClock = (function(){
         display: inline-block; \
         border: solid '+options.cssBorderColor+' '+options.cssBorderSize+'px; \
         overflow: hidden; \
+        line-height: 0; \
       } \
       '+shine()+' \
       .countdown-clock-dot { \
         width: '+options.dotSize+'px; \
         height: '+options.dotSize+'px; \
+        line-height: 0; \
         background-color: '+options.cssDotColor+'; \
         margin: '+options.cssDotMargin+'px; \
         border-radius: 50%; \
