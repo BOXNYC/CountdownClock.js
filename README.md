@@ -7,9 +7,10 @@ Pure CSS countdown clock controlled by JavaScript.
 ```
 var COUNTDOWN = new CountdownClock(30, {
     onChange: function(){
-        if(this.time <= 10 && this.getOption('cssLitDotColor') != 'red') {
+        var color = this.getOption('cssLitDotColor');
+        if(this.time <= 10 && color != 'red') {
             this.setOption('cssLitDotColor', 'red');
-        } else if(this.time > 10 && this.getOption('cssLitDotColor') != '#0f0') {
+        } else if(this.time > 10 && color != '#0f0') {
             this.setOption('cssLitDotColor', '#0f0');
         };
     },
