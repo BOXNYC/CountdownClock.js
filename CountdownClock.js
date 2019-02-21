@@ -15,6 +15,7 @@ var CountdownClock = (function(){
         dotSize: 6,
         element: null,
         elementParent: document.body,
+        dotBorder: false,
         cssPosition: 'relative',
         cssBackgroundColor: 'black',
         cssDotColor: '#393939',
@@ -69,6 +70,7 @@ var CountdownClock = (function(){
         border: solid '+options.cssBorderColor+' '+options.cssBorderSize+'px; \
         overflow: hidden; \
         line-height: 0; \
+        white-space: nowrap; \
       } \
       '+shine()+' \
       .countdown-clock-dot { \
@@ -101,15 +103,64 @@ var CountdownClock = (function(){
       for(var row = 1; row <= options.dotsHeight; row++) matrix.push([]);
       options.element = document.createElement('div');
       options.element.classList = 'countdown-clock';
-      for(var row = 1; row <= options.dotsHeight; row++) {
-        for(var column = 1; column <= options.dotsWidth; column++) {
-          var dot = document.createElement('div');
-          dot.classList = 'countdown-clock-dot';
+      if (options.dotBorder) {
+        row = 0;
+        for(var column = 0; column <= options.dotsWidth+1; column++) {
+          var dot = document.createElement('div'),
+              classes = ['countdown-clock-dot', 'countdown-clock-dot-border'];
+          classes.push('countdown-clock-dot-border-'+row+'-'+column);
+          classes.push('countdown-clock-dot-border-row-'+row);
+          classes.push('countdown-clock-dot-border-column-'+column);
+          dot.classList = classes.join(' ');
           options.element.appendChild(dot);
+        }
+        options.element.appendChild(document.createElement('br'));
+      } else {
+        var column;
+      }
+      for(row = 1; row <= options.dotsHeight; row++) {
+        for(column = 1; column <= options.dotsWidth; column++) {
+          var dot = document.createElement('div'),
+              classes = ['countdown-clock-dot'];
+          if(column == 1 && options.dotBorder) {
+            var dotBorder = document.createElement('div');
+            classes.push('countdown-clock-dot-border');
+            classes.push('countdown-clock-dot-border-'+row+'-0');
+            classes.push('countdown-clock-dot-border-row-'+row);
+            classes.push('countdown-clock-dot-border-column-0');
+            dotBorder.classList = classes.join(' ');
+            options.element.appendChild(dotBorder);
+          }
+          classes = ['countdown-clock-dot'];
+          classes.push('countdown-clock-dot-'+row+'-'+column);
+          classes.push('countdown-clock-dot-row-'+row);
+          classes.push('countdown-clock-dot-column-'+column);
+          dot.classList = classes.join(' ');
+          options.element.appendChild(dot);
+          if(column == options.dotsWidth && options.dotBorder) {
+            var dotBorder = document.createElement('div');
+            classes = ['countdown-clock-dot', 'countdown-clock-dot-border'];
+            classes.push('countdown-clock-dot-border-'+row+'-'+(column+1));
+            classes.push('countdown-clock-dot-border-row-'+row);
+            classes.push('countdown-clock-dot-border-column-'+(column+1));
+            dotBorder.classList = classes.join(' ');
+            options.element.appendChild(dotBorder);
+          }
           if(column == options.dotsWidth) options.element.appendChild(document.createElement('br'));
           matrix[row-1].push(dot);
         };
       };
+      if (options.dotBorder) {
+        for(column = 0; column <= options.dotsWidth+1; column++) {
+          var dot = document.createElement('div'),
+              classes = ['countdown-clock-dot', 'countdown-clock-dot-border'];
+          classes.push('countdown-clock-dot-border-'+row+'-'+column);
+          classes.push('countdown-clock-dot-border-row-'+row);
+          classes.push('countdown-clock-dot-border-column-'+column);
+          dot.classList = classes.join(' ');
+          options.element.appendChild(dot);
+        }
+      }
       options.elementParent.appendChild(options.element);
     };
     
