@@ -80,7 +80,6 @@ var CountdownClock = (function(){
         background-color: '+options.cssDotColor+'; \
         margin: '+options.cssDotMargin+'px; \
         border-radius: 50%; \
-        -moz-border-radius: 50%; \
         -webkit-border-radius: 50%; \
         -ms-border-radius: 50%; \
         -o-border-radius: 50%; \
